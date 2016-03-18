@@ -1,0 +1,40 @@
+---
+tscached:
+    redis:
+        host: <%= @redis_host %>
+        port: <%= @redis_port %>
+        default_expire: 10800  # 3 hours
+
+    kairosdb:
+        host: <%= @kairosdb_host %>
+        port: <%= @kairosdb_port %>
+
+    webapp:
+        host: "0.0.0.0"
+        port: <%= @webapp_port %>
+        log_level: "logging.DEBUG"
+
+    expiry:
+        metricnames: 300
+        tagnames: 300
+        tagvalues: 300
+        metaquery: 300
+
+    data:
+        default_expiry: 10800  # 3 hours, in seconds
+        expected_resolution: 10000  # in milliseconds
+        acceptable_skew: 6  # for merging purposes
+        staleness_threshold: 10  # data up to this far in the past is "new"
+
+    chunking:
+        chunk_length: 3600  # chunk on 1 hour intervals
+        max_chunks: 6  # increase chunk size if more than this needed
+        thread_timeout: 30  # timeout on waiting for chunk threads to join
+
+    shadow:  # in seconds
+        http_header_name: 'Tscached-Shadow-Load'
+        update_interval: 300  # how often to run the update script (secs)
+        leader_expiration: 3600  # TTL (sec) on the leader flag - which server runs updates
+        referrer_blacklist:  # if the referrer contains any of these, do not do readahead.
+        - 'edit'      # grafana edit views
+        - 'tscached'  # commonly part of the URL for the debug UI

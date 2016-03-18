@@ -1,0 +1,9 @@
+[uwsgi]
+http = 0.0.0.0:<%= @webapp_port %>
+callable = app
+processes = <%= @num_processes %>
+threads = <%= @num_threads %>
+master = true
+stats = 0.0.0.0:<%= @stats_port %>
+http-keepalive = true
+die-on-term = true

@@ -78,4 +78,14 @@ class tscached (
     ],
   }
 
+  logrotate::rule { 'tscached_logs':
+    path         => '/var/log/tscached/*.log',
+    rotate       => '10',
+    rotate_every => 'day',
+    compress     => true,
+    copytruncate => true,
+    missingok    => true,
+    size         => '10M',
+  }
+
 }

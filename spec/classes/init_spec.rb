@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'tscached', :type => :class do
-  let(:facts) { global_facts }
 
   context 'no parameters' do
     it { should contain_package('tscached').with_ensure('latest') }
